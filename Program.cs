@@ -19,12 +19,12 @@ namespace Hangman
             //Randomly choose a secret word 
             Random random = new Random();
             int num = random.Next(0, 4);
-            string secretWord = secretWords[num];
+            string secretWord = "hus"; // secretWords[num];
             int wordLength = secretWord.Length;
            
             //The users info
             char letter;
-            int numberOfGuesses = 10;
+            int numberOfGuesses = 4;
             StringBuilder lettersGuessed = new StringBuilder();
 
             //The word and letters displayed while guessing
@@ -33,29 +33,55 @@ namespace Hangman
                 guessedWord[i] = '_';
             }
             Console.WriteLine("The word is " + wordLength + " letters long. ");
-            Boolean keepRunning = true;
+
+            bool keepRunning = true;
             while (keepRunning)
             {
                 Console.Write("Guess a letter: ");
-                letter = char.Parse(Console.ReadLine());
-
-                for (int i = 0; i < wordLength; i++)
+                try
                 {
-                    if (letter == secretWord[i])
+                    letter = char.Parse(s: Console.ReadLine());
+                    if (Char.IsDigit(letter))
                     {
-                        guessedWord[i] = letter;
+                        Console.WriteLine("There is no number in the word.");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < wordLength; i++)
+                        {
+                            if (letter == secretWord[i])
+                            {
+                                guessedWord[i] = letter;
+                            }
+                        }
+                    }
+                    for(int i = 0; i < lettersGuessed.Length; i++)
+                    {
+                        if(lettersGuessed[i] != letter)
+                        {
+
+                        }
+                    }
+                    lettersGuessed.Append(letter);
+                    numberOfGuesses--;
+                    Console.WriteLine(guessedWord);
+                    Console.WriteLine("Number of guesses left: " + numberOfGuesses);
+                    Console.WriteLine("Letters guessed: " + lettersGuessed.ToString());
+                    if(numberOfGuesses == 0) {
+                        Console.WriteLine("The correct word is " + secretWord);
+                        keepRunning = false;
+                    }
+                    string guessedWordInAString = new string(guessedWord);
+                    if(guessedWordInAString == secretWord){
+                        Console.WriteLine("You guessed wright! ");
+                        keepRunning = false;
                     }
                 }
-                lettersGuessed.Append(letter);
-                numberOfGuesses--;
-                Console.WriteLine(guessedWord);
-                Console.WriteLine("Number of guesses left: " + numberOfGuesses);
-                Console.WriteLine("Letters guessed: " + lettersGuessed.ToString());
-                if(numberOfGuesses == 0)
-                    keepRunning = false;
-                string guessedWordInAString = new string(guessedWord);
-                if(guessedWordInAString == secretWord)
-                    keepRunning = false;
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    throw;
+                }
             }
             
         }// End of main
