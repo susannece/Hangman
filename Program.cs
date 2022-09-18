@@ -19,12 +19,12 @@ namespace Hangman
             //Randomly choose a secret word 
             Random random = new Random();
             int num = random.Next(0, 4);
-            string secretWord = "hus"; // secretWords[num];
+            string secretWord = secretWords[num];
             int wordLength = secretWord.Length;
            
             //The users info
             char letter;
-            int numberOfGuesses = 4;
+            int numberOfGuesses = 10;
             StringBuilder lettersGuessed = new StringBuilder();
 
             //The word and letters displayed while guessing
